@@ -294,6 +294,7 @@ public class Jbot extends DefaultBWListener {
 		// This may take a few minutes if the map is processed first time!
 		bewb = new BWEM(game);
 		bewb.initialize();
+		bewb.getMap().assignStartingLocationsToSuitableBases();
 		BasePos = self.getStartLocation().toPosition();
 		Choke = null;
 		game.sendText("1800 Free Elo Ryan speaking how am i be of service?");
