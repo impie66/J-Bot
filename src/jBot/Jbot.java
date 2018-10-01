@@ -289,11 +289,12 @@ public class Jbot extends DefaultBWListener {
 	public void onStart() {
 		game = bwClient.getGame();
 		self = game.self();
-		
+		System.out.println(game.mapFileName());
 		// Use BWTA to analyze map
 		// This may take a few minutes if the map is processed first time!
 		bewb = new BWEM(game);
 		bewb.initialize();
+		bewb.getMap().getData();
 		bewb.getMap().assignStartingLocationsToSuitableBases();
 		BasePos = self.getStartLocation().toPosition();
 		Choke = null;
@@ -352,10 +353,18 @@ public class Jbot extends DefaultBWListener {
 		if(pBuildings.isEmpty() == false){
 			if(unit.getType().isBuilding() == true && pBuildings.get(0) == unit.getType() && unit.getPlayer() == self){
 				game.sendText("Priority Building Done! " + unit.getType().toString());
-				pBuildings.remove(0);
-				pWorkers.remove(0);
-				buildTypes.remove(unit.getType());
-				pPosition.remove(0);
+				if(!pBuildings.isEmpty()){
+					pBuildings.remove(0);
+				}
+				if(!pWorkers.isEmpty()){
+					pWorkers.remove(0);
+				}
+				if(!buildTypes.isEmpty()){
+					buildTypes.remove(unit.getType());
+				}
+				if(!pPosition.isEmpty()){
+					pPosition.remove(0);
+				}
 				if(pBuildingsBuilt.contains(unit.getType()) == false){
 					pBuildingsBuilt.add(unit.getType());
 				}
@@ -658,9 +667,9 @@ public class Jbot extends DefaultBWListener {
 		}
 		
 		if (unit.getPlayer().isEnemy(self) && unit.getType() == UnitType.Terran_Bunker || unit.getType() == UnitType.Protoss_Photon_Cannon || unit.getType() == UnitType.Zerg_Sunken_Colony ) {
-				if(ScanLocations.contains(unit.getPosition()) == false){
+			if(ScanLocations.contains(unit.getPosition()) == false){
 					ScanLocations.add(unit.getPosition());
-					}
+			}
 		}
 		
 		
@@ -1413,13 +1422,7 @@ public class Jbot extends DefaultBWListener {
 		
 //		if (game.getFrameCount() % game.getLatencyFrames() != 0) {
 			
-		
-//		if(game.mapName() == "(2)ThirdWorld1.0" || game.mapName() == "(4)Sparkle1.1" ){
-//			ExpandEnabled = false;
-//			sdsddhgfio = true;
-//		}
-//		
-		
+			
 		StringBuilder sPlayerScores = new StringBuilder("Enemy Player Scores:\n");
 		StringBuilder sPlayerSize = new StringBuilder("Enemy Player Building Size:\n");
 //		
@@ -3477,7 +3480,7 @@ public class Jbot extends DefaultBWListener {
 			// income < needs
 
 	if(TeamGameMode == false){
-		if (HasScoutUnit == true && ScoutSent == true && scouter.isMoving() == false || scouter.isIdle() == true) {
+		if (HasScoutUnit == true && ScoutSent == true && scouter.isMoving() == false) {
 			if(enemyBuildingMemory.isEmpty() == true){
 			scouter.move(self.getStartLocation().toPosition());
 			for (Base b : bewb.getMap().getBases()) {
@@ -3500,7 +3503,7 @@ public class Jbot extends DefaultBWListener {
 	}
 	// if we are in a FFA
 	else {
-		if (HasScoutUnit == true && ScoutSent == true && scouter.isMoving() == false || scouter.isIdle() == true) {
+		if (HasScoutUnit == true && ScoutSent == true && scouter.isMoving() == false) {
 			boolean found = false;
 			for (Base b : bewb.getMap().getBases()) {
 				if (b.isStartingLocation() && game.isExplored(b.getLocation()) == false) {
@@ -3561,7 +3564,7 @@ public class Jbot extends DefaultBWListener {
 			
 			if(claimedGas.isEmpty() == false){
 				for(Geyser unit : claimedGas){
-						return unit.getCenter().toTilePosition();
+						return unit.getUnit().getTilePosition();
 				}
 			}
 			else {
@@ -3902,9 +3905,15 @@ public class Jbot extends DefaultBWListener {
 	
 
 	public boolean IsMilitrayUnit(Unit unit) {
+		if(unit == null){
+			System.out.println("Unit is Null");
+		}
+		else {
 		int Damage = unit.getType().groundWeapon().damageAmount() + unit.getType().airWeapon().damageAmount();
 		if(Damage > 0 && unit.getType().isWorker() == false && unit.getType().isBuilding() == false && unit.getType().isSpell() == false){
 			return true;
+		}
+		return false;
 		}
 		return false;
 	}
@@ -5669,14 +5678,18 @@ public int AvergeDistanceToRalleyPoint(){
 public static Base getClosestBaseLocation(Position pos) {
     Base closestBase = null;
 	Area aaaa = bewb.getMap().getArea(pos.toTilePosition());
+	//System.out.println(aaaa.getId());
+	//System.out.println(bewb.getMap().getBases().size());
     double dist = Double.MAX_VALUE;
     for (Base base : bewb.getMap().getBases()) {
         double cDist = pos.getApproxDistance(base.getLocation().toPosition());
+    	//System.out.println(cDist);
         if (closestBase == null || cDist < dist) {
             closestBase = base;
             dist = cDist;
         }
     }
+    
     return closestBase;
 }
 
@@ -5691,6 +5704,7 @@ public static ChokePoint getClosestChokePoint(Position pos) {
             dist = cDist;
         }
     }
+
     return closestBase;
 }
 
