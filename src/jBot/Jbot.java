@@ -347,6 +347,7 @@ public class Jbot extends DefaultBWListener {
 	}
 
 	public void onUnitCreate(Unit unit) {
+		try{
 		boolean isMilitray = IsMilitrayUnit(unit);
 	
 
@@ -611,6 +612,12 @@ public class Jbot extends DefaultBWListener {
 		if (unit.getType() == UnitType.Terran_Science_Vessel && unit.getPlayer() == self) {
 			TSF = TSF + 1;
 		}
+		 
+		} 
+		catch(Exception e){
+		 e.printStackTrace();
+		}
+		
 
 	}
 
@@ -886,7 +893,7 @@ public class Jbot extends DefaultBWListener {
 	}
 
 	public void onUnitDestroy(Unit unit) {
-		
+		try {
 		if(enemyWorkers.contains(unit) == true){
 			enemyWorkers.remove(unit);
 		}
@@ -1190,12 +1197,17 @@ public class Jbot extends DefaultBWListener {
 			}
 		
 		}
-
+		
+		
+		} 
+		catch(Exception e){
+			e.printStackTrace();
+		}
 
 	}
 
 	public void onUnitDiscover(Unit unit) {
-		 
+		 try {
 		boolean ismil = IsMilitrayUnit(unit);
 		//System.out.println("Is hostile? " + unit.getPlayer().isEnemy(self));
 		//System.out.println("Is Mil" + ismil + " Unit: " + unit.getType().toString());
@@ -1290,7 +1302,10 @@ public class Jbot extends DefaultBWListener {
 			enemyRace = 2;
 		}
 		
-
+	} 
+	catch(Exception e){
+	 e.printStackTrace();
+	}
 		
 	
 	}
@@ -1317,7 +1332,7 @@ public class Jbot extends DefaultBWListener {
 	
 	
 	public void onUnitShow(Unit unit){
-		
+		try {
 		if(estimatedEnemyScore > fapMyScores){
 			UpdateStrats();
 		}
@@ -1385,6 +1400,9 @@ public class Jbot extends DefaultBWListener {
 			pPosition.add(self.getStartLocation());
 		}
 		
+		} catch(Exception e){
+			e.printStackTrace();
+		}
 		//end of onUnitShow
 		
 	}
@@ -3909,13 +3927,13 @@ public class Jbot extends DefaultBWListener {
 			System.out.println("Unit is Null");
 		}
 		else {
-		int Damage = unit.getType().groundWeapon().damageAmount() + unit.getType().airWeapon().damageAmount();
-		if(Damage > 0 && unit.getType().isWorker() == false && unit.getType().isBuilding() == false && unit.getType().isSpell() == false){
-			return true;
-		}
+			int Damage = unit.getType().groundWeapon().damageAmount() + unit.getType().airWeapon().damageAmount();
+			if(Damage > 0 && unit.getType().isWorker() == false && unit.getType().isBuilding() == false && unit.getType().isSpell() == false){
+				return true;
+			}
 		return false;
 		}
-		return false;
+	return false;
 	}
 		
 		public boolean IsMilitrayBuilding(Unit unit) {
@@ -5468,14 +5486,22 @@ public boolean jFapGlobal(){
 	simulator.clear();
 	
 	for(Unit unit : myUnits){
+		if(unit.getType() == UnitType.Unknown){
+			System.out.println("Unit: " + unit.getType().toString() + " DS: " + unit.getType().destroyScore());
+		}
 		simulator.addUnitPlayer1(new JFAPUnit(unit));
 	}
 	
 	for(Unit unit : enemyUnits){
+		if(unit.getType() == UnitType.Unknown){
+			System.out.println("Unit: " + unit.getType().toString() + " DS: " + unit.getType().destroyScore());
+		}
+		System.out.println("Unit: " + unit.getType().toString() + " DS: " + unit.getType().destroyScore());
 		simulator.addUnitPlayer2(new JFAPUnit(unit));
 	}
 	
 	for(Unit unit : enemyDefences){
+		System.out.println("Unit: " + unit.getType().toString() + " DS: " + unit.getType().destroyScore());
 		simulator.addUnitPlayer2(new JFAPUnit(unit));
 	}
 
