@@ -14,15 +14,15 @@ import java.util.Collection;
 import java.applet.Applet;
 import java.applet.AudioClip;
 import bwapi.*;
-import bwapi.point.Position;
-import bwapi.point.TilePosition;
-import bwapi.types.BulletType;
-import bwapi.types.Order;
-import bwapi.types.TechType;
-import bwapi.types.UnitType;
-import bwapi.types.UpgradeType;
-import bwapi.values.Color;
-import bwapi.values.Flag;
+import bwapi.Position;
+import bwapi.TilePosition;
+import bwapi.BulletType;
+import bwapi.Order;
+import bwapi.TechType;
+import bwapi.UnitType;
+import bwapi.UpgradeType;
+import bwapi.Color;
+import bwapi.Flag;
 import bwem.*;
 import bwem.BWEM;
 import bwem.Base;
@@ -1584,12 +1584,12 @@ public class Jbot extends DefaultBWListener {
 
 			if (scouter.isVisible() == true) {
 				Position pos = scouter.getPosition();
-				game.drawCircleMap(pos, 25, bwapi.values.Color.Purple, false);
+				game.drawCircleMap(pos, 25, bwapi.Color.Purple, false);
 			}
 
 			if (expanding == true && CCBuilder.exists() == true) {
 				Position pos = CCBuilder.getPosition();
-				game.drawCircleMap(pos, 25, bwapi.values.Color.White, false);
+				game.drawCircleMap(pos, 25, bwapi.Color.Yellow, false);
 			}
 
 			if (income < needs && ExpandEnabled == true && LastExpandFrame < totalFrames && Bases != 5 && needsToExpand == false){
@@ -1600,7 +1600,7 @@ public class Jbot extends DefaultBWListener {
 			}
 			
 			if(RegroupPos != null){
-				game.drawCircleMap(RegroupPos, 35, bwapi.values.Color.Red, true);
+				game.drawCircleMap(RegroupPos, 35, bwapi.Color.Red, true);
 			}
 			
 			if(defenderCall == false){
@@ -1793,7 +1793,7 @@ public class Jbot extends DefaultBWListener {
 			
 			if(enemyChokes.isEmpty() == false){
 				for(Region region : enemyChokes){
-					game.drawCircleMap(region.getCenter(), 20, bwapi.values.Color.White);
+					game.drawCircleMap(region.getCenter(), 20, bwapi.Color.White);
 				}
 			}
 
@@ -1807,7 +1807,7 @@ public class Jbot extends DefaultBWListener {
 			
 
 			if (isExpanding == true) {
-				game.drawCircleMap(ExpandPos.toPosition(), 25, bwapi.values.Color.Cyan, false);
+				game.drawCircleMap(ExpandPos.toPosition(), 25, bwapi.Color.Cyan, false);
 			}
 
 			if (HowManyDoIHave(UnitType.Terran_Academy) == 0) {
@@ -1838,7 +1838,7 @@ public class Jbot extends DefaultBWListener {
 			
 			if(buildingMacroBuilding == true){
 				if(macrobuilder != null){
-					game.drawCircleMap(macrobuilder.getPosition(), 10, bwapi.values.Color.Yellow);
+					game.drawCircleMap(macrobuilder.getPosition(), 10, bwapi.Color.Yellow);
 					game.drawTextMap(macrobuilder.getPosition(), "Communist Sympathiser");
 					
 				}
@@ -1926,7 +1926,7 @@ public class Jbot extends DefaultBWListener {
 						if(constructingWorkers.contains(myUnit) == false){
 						constructingWorkers.add(myUnit);
 						}
-						game.drawCircleMap(buildTile.toPosition(), 10, bwapi.values.Color.Yellow, false);
+						game.drawCircleMap(buildTile.toPosition(), 10, bwapi.Color.Yellow, false);
 						if(LastBuildTick == 0){
 						LastBuildTick = totalFrames + 100;
 						}
@@ -2323,7 +2323,7 @@ public class Jbot extends DefaultBWListener {
 			
 			
 			if(ralleyPoint != null){
-				game.drawCircleMap(ralleyPoint, 100, bwapi.values.Color.Green);
+				game.drawCircleMap(ralleyPoint, 100, bwapi.Color.Green);
 			}
 			
 
@@ -2382,7 +2382,7 @@ public class Jbot extends DefaultBWListener {
 				if(myUnit.isSelected() == true && drawOrderLines == true){
 				game.drawTextMap(myUnit.getPosition().getX(), myUnit.getPosition().getY(), myUnit.getOrder().toString());
 				game.drawLineMap(myUnit.getPosition().getX(), myUnit.getPosition().getY(), myUnit.getOrderTargetPosition().getX(),
-				myUnit.getOrderTargetPosition().getY(), bwapi.values.Color.Black);
+				myUnit.getOrderTargetPosition().getY(), bwapi.Color.Black);
 				}
 				
 				if(myUnit.isStartingAttack() || myUnit.isAttacking() == true){
@@ -2391,7 +2391,7 @@ public class Jbot extends DefaultBWListener {
 				
 				if(pWorkers.isEmpty() == false){
 					if(pWorkers.contains(myUnit) == true){
-						game.drawCircleMap(myUnit.getPosition(), 20, bwapi.values.Color.Black);
+						game.drawCircleMap(myUnit.getPosition(), 20, bwapi.Color.Black);
 					}
 				}
 				
@@ -2404,7 +2404,7 @@ public class Jbot extends DefaultBWListener {
 				}
 				
 				if(employees.containsKey(myUnit) == true){
-					game.drawLineMap(myUnit.getPosition(), employees.get(myUnit).toPosition(), bwapi.values.Color.Black);
+					game.drawLineMap(myUnit.getPosition(), employees.get(myUnit).toPosition(), bwapi.Color.Black);
 				}
 				
 				if(employees.isEmpty() == false && baseWorkers.isEmpty() == false && maxWorkers.isEmpty() == false){
@@ -2710,7 +2710,7 @@ public class Jbot extends DefaultBWListener {
 				}
 				
 				if(bunkersFilled.contains(myUnit) == true){
-					game.drawCircleMap(myUnit.getPosition(), 100, bwapi.values.Color.Purple);
+					game.drawCircleMap(myUnit.getPosition(), 100, bwapi.Color.Purple);
 				}
 
 				if (myUnit.getType() == UnitType.Terran_Siege_Tank_Siege_Mode && myUnit.isSieged() == true && myUnit.isIdle() == true) {
@@ -2784,7 +2784,7 @@ public class Jbot extends DefaultBWListener {
 
 				if (myUnit.isConstructing() == true) {
 					Position pos = myUnit.getPosition();
-					game.drawCircleMap(pos, 20, bwapi.values.Color.Brown);
+					game.drawCircleMap(pos, 20, bwapi.Color.Brown);
 
 				}
 				
@@ -2896,11 +2896,16 @@ public class Jbot extends DefaultBWListener {
 						if(units.getPlayer() == self && bool1 == true && mine.contains(units) == false && bool1 == true){
 							mine.add(units);
 						}
-					
+						System.out.println("Is enemy: " + units.getPlayer().isEnemy(self));
+						System.out.println("Is Mil Unit: " + bool);
+						System.out.println("Contains " + hostile.contains(units));
+						
 						if(units.getPlayer().isEnemy(self) && bool == true && hostile.contains(units) == false){
+							System.out.println("Trigger");
 							hostile.add(units);
 							if(attacker == null){
 								attacker = units;
+								System.out.println("Attacker is now: " + attacker.getType().toString());
 								attackerx = attacker.getPosition().x;
 								attackery = attacker.getPosition().y;
 							}
@@ -2920,7 +2925,11 @@ public class Jbot extends DefaultBWListener {
 					if(canWin == false && canRetreat == true){
 						//System.out.println("Can't win");
 						Position regroup = null;
-						if(attacker.isVisible() == false){
+						if(attacker == null){
+							System.out.println("Attacker is null");
+						}
+						System.out.println("Attacker visible: " + attacker.isVisible());
+						if(game.isVisible(attacker.getTilePosition()) == false){
 						//System.out.println("Is not visible");
 						regroup = GetJukePosManual(myUnit, attackerx, attackery);
 						} else {
@@ -3100,7 +3109,7 @@ public class Jbot extends DefaultBWListener {
 								for(Unit unit : myUnits){
 									if(unitss != null){
 										unit.attack(unitss);
-										game.drawCircleMap(unitss.getPosition(), 15, bwapi.values.Color.Green);
+										game.drawCircleMap(unitss.getPosition(), 15, bwapi.Color.Green);
 										game.pingMinimap(unitss.getPosition());
 									}
 								}
@@ -3419,7 +3428,7 @@ public class Jbot extends DefaultBWListener {
 			}
 			
 			for(Region region : myRegions){
-				game.drawCircleMap(region.getCenter(), 10, bwapi.values.Color.White);
+				game.drawCircleMap(region.getCenter(), 10, bwapi.Color.White);
 			}
 
 
@@ -3545,13 +3554,13 @@ public class Jbot extends DefaultBWListener {
 	
 		if(ExpandPos != null){
 			if (ExpandPos.isValid(game)) {
-				game.drawCircleMap(ExpandPos.toPosition(), 25, bwapi.values.Color.Cyan, false);
+				game.drawCircleMap(ExpandPos.toPosition(), 25, bwapi.Color.Cyan, false);
 			}
 		}
 		
 		if(Commander != null){
 			if (Commander.exists()) {
-				game.drawCircleMap(Commander.getPosition(), 25, bwapi.values.Color.Orange, false);
+				game.drawCircleMap(Commander.getPosition(), 25, bwapi.Color.Orange, false);
 			}
 		}
 		
@@ -4201,7 +4210,6 @@ public void UpdateStrats(){
 			
 
 		}
-		
 		else if(shouldregroup == true) {
 			attacking = false;
 			wasAttacking = false;
@@ -5139,7 +5147,8 @@ public boolean ShouldRegroup(Position pos) {
 	// TODO fix this shit
 	int dist = 0;
 	boolean hasUnitsNearby = false;
-
+	//System.out.println("Should Regroup vis: " + game.isVisible(pos.toTilePosition()));
+	
 	if(game.isVisible(pos.toTilePosition()) == false){
 		return false;
 	}
@@ -5487,21 +5496,21 @@ public boolean jFapGlobal(){
 	
 	for(Unit unit : myUnits){
 		if(unit.getType() == UnitType.Unknown){
-			System.out.println("Unit: " + unit.getType().toString() + " DS: " + unit.getType().destroyScore());
+			//System.out.println("Unit: " + unit.getType().toString() + " DS: " + unit.getType().destroyScore());
 		}
 		simulator.addUnitPlayer1(new JFAPUnit(unit));
 	}
 	
 	for(Unit unit : enemyUnits){
 		if(unit.getType() == UnitType.Unknown){
-			System.out.println("Unit: " + unit.getType().toString() + " DS: " + unit.getType().destroyScore());
+			//System.out.println("Unit: " + unit.getType().toString() + " DS: " + unit.getType().destroyScore());
 		}
-		System.out.println("Unit: " + unit.getType().toString() + " DS: " + unit.getType().destroyScore());
+		//System.out.println("Unit: " + unit.getType().toString() + " DS: " + unit.getType().destroyScore());
 		simulator.addUnitPlayer2(new JFAPUnit(unit));
 	}
 	
 	for(Unit unit : enemyDefences){
-		System.out.println("Unit: " + unit.getType().toString() + " DS: " + unit.getType().destroyScore());
+		//System.out.println("Unit: " + unit.getType().toString() + " DS: " + unit.getType().destroyScore());
 		simulator.addUnitPlayer2(new JFAPUnit(unit));
 	}
 
